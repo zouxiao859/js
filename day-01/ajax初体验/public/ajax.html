@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button id="btn">按钮</button>
+    <div id="box"></div>
+    <script>
+        //获取
+        let btn = document.getElementById('btn')
+        let box = document.getElementById('box')
+        //给btn绑定点击事件
+        btn.onclick = function () {
+            //实例化以个ajax
+            const zhx = new XMLHttpRequest()
+            console.log(zhx.readyState)
+            //使用open方法
+            zhx.open('post', 'http://172.0.0.1:5000/text')
+            console.log(zhx.readyState)
+
+            zhx.send('username=zs&eag=18')
+            zhx.onreadystatechange = function () {
+                console.log(zhx.readyState)
+                if (zhx.readyState === 4) {
+
+                    if (zhx.status === 200) {
+                        console.log(zhx.responseText)//获取主体中的字符串
+                        box.textContent=zhx.responseText
+                    }
+                }
+
+            }
+            console.log(123)
+            console.log(456)
+        }
+    </script>
+</body>
+
+</html>

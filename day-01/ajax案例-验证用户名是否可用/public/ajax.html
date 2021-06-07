@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text" id="input">
+    <button id="btn">按钮</button>
+    <span id="span"></span>
+    <script>
+        //获取
+        let input = document.getElementById('input')
+        let btn = document.getElementById('btn')
+        let span = document.getElementById('span')
+        //给btn绑定点击事件
+        btn.onclick = function () {
+            //获取用户输入的用户名
+            let value = input.value.trim()
+            if (!value) return
+            //将用户名用ajax上传给服务器
+            //实例化一个ajax
+            const zhx = new XMLHttpRequest()
+            //调用open
+            zhx.open('post', 'http://172.0.0.1:5000/test')
+            //设置请求头
+            zhx.setRequestHeader(
+                'content-type',
+                'application/x-www-form-urlencoded'
+            )
+            //设置请求主体，并发送
+            zhx.send('userame=' + value)
+            //根据服务器响应，提示用户
+            zhx.onreadystatechange = function () {
+                if (zhx.readyState === 4) {
+                    if (zhx.status === 200) {
+                        console.log(zhx.responseText)
+                        let obj = JSON.parse(zhx.responseText)
+                        if (obj.status === 'no') {
+                            span.textContent = obj.message
+                            span.style.color = 'red'
+                        } else {
+                            span.textContent = obj.message
+                            span.style.color = 'green'
+                        }
+                    }
+                }
+            }
+        }
+
+    </script>
+</body>
+
+</html>

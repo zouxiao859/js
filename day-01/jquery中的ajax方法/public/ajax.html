@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button id=btn>按钮</button>
+    <script src="./jquery.js"></script>
+
+    <script>
+        $('#btn').on('click', function () {
+            $.ajax({
+                url: 'http://172.0.0.1:5000/test',
+                type: 'get',//默认就是get
+                data: {
+                    name: 'zs',
+                    eag: 18
+                },
+                dataType: 'text',//默认json
+                timeout: 3000,//超时时间
+                beforeSend: function () {// 请求发送之前调用, 如果显式的return false,就不发送请求了
+                    console.log('beforeSend')
+                    return 0
+                },
+                success: function (data) {//响应成功的回调, data就是响应主体的数据
+                    console.log('success', data)
+                },
+                error: function (xhr) {// 响应失败的回调, xhr就是请求对象
+                    console.log('error', xhr)
+                },
+                complete: function () {// 响应完成:不管成功失败都是完成
+                    console.log('comolete')
+                },
+
+            })
+        })
+    </script>
+</body>
+
+</html>
