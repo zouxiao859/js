@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button id="btn">按钮</button>
+    <script>
+        //实现跨域：jsonp
+        //jsonp原理：利用script标签不受同源影响，给服务器发送请求，将一个函数的名字发送个服务器服务器响应了这个函数的调用，将要相应的数据，传入到函数调用的实参
+
+        //1.声明一个回调函数可以接收到响应的数据
+        function fn1(data) {
+            console.log(data)
+            console.log('拿到了')
+        }
+        btn.onclick = function () {
+            let script = document.createElement('script')
+            script.src = 'http://127.0.0.1:5000/test?callback=fn1'
+            document.body.appendChild(script)
+
+            console.log(1)
+            console.log(2)
+        }
+    </script>
+</body>
+
+</html>
